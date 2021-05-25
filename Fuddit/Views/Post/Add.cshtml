@@ -1,0 +1,78 @@
+﻿@model Post
+@{
+    ViewData["Title"] = "Add posts";
+}
+
+<form method="post" class="general_border" id="postform" enctype="multipart/form-data">
+    
+    <div class="form-group content_box">
+        <label asp-for="Category" class="text-white"></label>
+        <select asp-for="Category" class="form-control">
+            <option value="None">None</option>
+            <option value="News">News</option>
+            <option value="Gaming">Gaming</option>
+            <option value="Funny">Funny</option>
+        </select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group content_box text-white">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control text_box_style" placeholder="Enter post title">
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group content_box text-white">
+        <label asp-for="Body"></label>
+    </div>
+    
+    <div class="form-group content_box">
+        
+        <div class="Upload_file_btn">
+            <button class="sort_by_btn">
+                <span class="glyphicon glyphicon-bold"></span>
+            </button>
+        </div>
+        
+        <div id="toolbar" class="Upload_file_btn">
+            <button class="sort_by_btn">
+                <span class="glyphicon glyphicon-italic"></span>
+            </button>
+        </div>
+        <div id="toolbar" class="Upload_file_btn">
+            <label asp-for="hyplink" class="text-white"></label>
+            <input asp-for="hyplink" type="url" id="hyplink" name="hyplink">
+            <span asp-validation-for="hyplink" class="text-danger"></span>
+        </div>
+        <br>
+        <div id="toolbar" class="Upload_file_btn">
+            <div class="form-group">
+                <label asp-for="Picture" style="width: 100%;" class="text-white"></label>
+                <input type="file"
+                       accept=".png,.jpg,.jpeg,.gif,.tif"
+                       asp-for="Picture"
+                       class="form-control text-white"
+                       style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                       onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])"/>
+                <span asp-validation-for="Picture" class="text-danger"></span>
+            </div>
+        </div>
+
+        <textarea asp-for="Body" class="form-control text_box_style" placeholder="Enter your text" rows="15" cols="50"></textarea>
+        <span asp-validation-for="Body" class="text-danger"></span>
+
+    </div>
+
+    <div class="form-group content_box text-white">
+        <label asp-for="Tags"></label>
+        <input asp-for="Tags" class="form-control text_box_style" placeholder="Enter your tags">
+        <span asp-validation-for="Tags" class="text-danger"></span>
+    </div>
+
+    <div class="form-group inside_border">
+        <button type="submit" id="Submit" class="post_btn">Post</button>
+    </div>
+</form>
+
+
+

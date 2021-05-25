@@ -1,0 +1,133 @@
+﻿@model List<Post>
+@{
+    ViewData["Title"] = "Posts";
+}
+
+<h1> News </h1>
+
+<div class="sort_by">
+      <button type="submit" class="sort_by_btn"><span class="glyphicon glyphicon-fire"></span><p_charcoal> Hot </p_charcoal></button>
+  </div>
+
+  <div class="sort_by">
+      <button type="submit" class="sort_by_btn"><span class="glyphicon glyphicon-time"></span><p_charcoal> New </p_charcoal></button>
+  </div>
+
+<div class="sort_by">
+    <button type="submit" class="sort_by_btn"><span class="	glyphicon glyphicon-arrow-up"></span><p_charcoal> Top </p_charcoal></button>
+</div>
+<div class="dropdown float-left">
+    <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Sub-category
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li><a href="https://localhost:5001/Post/Index">Front page</a></li>
+        <li><a href="https://localhost:5001/Post/News">News</a></li>
+        <li><a href="https://localhost:5001/Post/Gaming">Gaming</a></li>
+        <li><a href="https://localhost:5001/Post/Funny">Funny</a></li>
+    </ul>
+  </div>
+
+@{
+      var order = from post in Model orderby post.Id descending select post;
+      foreach (var post in order)
+      {
+          <form method="post" class="general_border text-white">
+
+              <div class="title_box">
+                  <h4>
+                      @Html.DisplayFor(modelItem => post.Title)
+                  </h4>
+              </div>
+
+              <div class="content_box">
+                  @{
+                      if (post.Picture != null)
+                      {
+                          var base64 = Convert.ToBase64String(post.Picture);
+                          var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                          <p>
+                              @Html.DisplayFor(modelItem => post.Body)
+                          </p>
+                          <p>
+                              <img  src="@imgsrc" style="width:350px;height:350px;">
+                          </p>
+                      }
+                      else
+                      {
+                          <p>
+                              @Html.DisplayFor(modelItem => post.Body)
+                          </p>
+                      }
+                      if (post.hyplink != null)
+                      {
+                          <p>
+                              <a href="@Html.DisplayFor(ModelItem => post.hyplink)"> @Html.DisplayFor(modelItem => post.hyplink)</a>
+                          </p>
+                      }
+                  }
+              </div>
+               <div class="tag_box">
+                <b>TAGS:</b>
+                <p>
+                    @Html.DisplayFor(modelItem => post.Tags)
+                </p>
+            </div>
+            
+            <div class="comment_box">
+                <b>Comments:</b>
+                <div>
+                    
+                    @{
+                        foreach (var comment in post.Comments)
+                        {
+                            <p>
+                                <partial name="_CommentPartial" model="comment"/>
+                            </p>
+                        }
+                    }
+                    </div>
+            </div>
+            <div class="comment_post_box">
+                @{
+                    var values =
+                        new Dictionary<string, string>
+                        {
+                            {"PostId", post.Id.ToString()}
+                        };
+                }
+                
+                <a asp-action="Comment" asp-all-route-data="values">Add Comment</a>
+            </div>
+
+            <div class="like_counter_box">
+                
+                <b>
+                    Likes: @Html.DisplayFor(modelItem => post.Like)
+                </b>
+                
+            </div>
+            <div class="btn_box">    
+                <div class="btn_box glyphicon center">
+                    @Html.ActionLink("", "Like", new {id = post.Id}, new {@class="like_dislike_btn glyphicon glyphicon-thumbs-up text-success"})
+                    
+                </div>
+            </div>
+            <div class="btn_box">
+            <div>
+                @Html.ActionLink("", "Dislike", new {id = post.Id}, new {@class = "like_dislike_btn glyphicon glyphicon-thumbs-down text-danger"})
+            </div>
+            </div>
+            
+            <div class="btn_box">
+                <a asp-action="Edit" class="like_dislike_btn glyphicon glyphicon-edit text-warning" asp-route-id="@post.Id"></a>
+            </div>
+            <div class="btn-box text-light float-lg-right">
+                <a href="@Url.RouteUrl("Userview", new {nickname = post.User.Nickname})"> Posted by @Html.DisplayFor(modelItem => post.User.Nickname)</a>
+            </div>
+            
+            
+        </form>
+          <p> </p>
+
+    }
+} 

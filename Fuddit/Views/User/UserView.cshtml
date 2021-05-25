@@ -1,0 +1,48 @@
+﻿@model ApplicationUser
+
+@using Microsoft.AspNetCore.Identity
+@using Fuddit.Models
+@using Microsoft.EntityFrameworkCore
+@using Fuddit.Data
+@using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
+@using SQLitePCL
+@using System.Net
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<form enctype="multipart/form-data" id="profile-form" method="post">
+    <div class="row">
+        <div class="col-sm-3" style="margin-bottom: 60px;">
+            @if (Model.Profilepicture == null)
+            {
+                <img id="profilepicture" style="width:200px;height:200px; object-fit:cover; border-radius: 50%;" src="~/images/profile_icon.png" width="35px"/>
+            }
+            else
+            {
+                var base64 = Convert.ToBase64String(Model.Profilepicture);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                <img id="profilepicture" style="width:200px;height:200px; object-fit:cover; border-radius: 50%;" src="@imgSrc" width="35px"/>
+            }
+        </div>
+        <div class="col-sm-7">
+            <h1>@Model.Nickname</h1>
+            <p>@Model.Bio</p>
+        </div>
+        <div class="col-sm-1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9">
+
+        </div>
+        <div class="col-sm-3">
+            <H1>Email</H1>
+            <p>@Model.UserName</p>
+
+            <h2>Phonenumber</h2>
+            <p>@Model.PhoneNumber</p>
+        </div>
+    </div>
+</form>
+      

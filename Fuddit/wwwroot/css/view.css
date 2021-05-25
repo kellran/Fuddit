@@ -1,0 +1,165 @@
+﻿/* Classes
+------------------------------------------------------------------------
+ */
+
+/* centers an image */
+.center{
+    display: block;
+    /* marging: top and bottom = 0 left and right = auto */
+    margin: 0 auto;
+}
+
+/*A custom font to be used*/
+p_charcoal {
+    font-family: Impact, white, sans-serif;
+}
+
+/*Gives the entire table the groove border*/
+table, th, td{
+    border: 1px groove;
+}
+
+/*Custom design for the "post button"*/
+.post_btn{
+    background-color: floralwhite;
+    display: block;
+    margin: auto;
+    width: 600px;
+    height: 60px;
+    border: 1px groove;
+    border-radius: 30px;
+
+}
+
+/*Border to go around every row*/
+.general_border{
+    border: 1px groove;
+    background-color: #343a40;
+}
+
+/*Border per message*/
+.inside_border{
+    border: 20px solid #343a40;
+    background-color: #343a40;
+}
+
+/*Simply adds a style to the text box*/
+.text_box_style{
+    border: 1px groove;
+}
+
+/*Adds a style to the title box, content box, tag box and comment box*/
+.title_box{
+    border-bottom: 1px groove;
+    background-color: #343a40;
+    display: block;
+    margin: 2% 5%;
+}
+
+.content_box{
+    background-color: #343a40;
+    display: block;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.tag_box{
+    border-top: 1px groove;
+    background-color: #343a40;
+    display: block;
+    margin: 2% 5%;
+}
+
+.like_counter_box{
+    border-top: 1px groove;
+    background-color: #343a40;
+    display: block;
+    margin: 2% 5%;
+}
+
+.comment_post_box{
+    border-top: 1px transparent;
+    background-color: #343a40;
+    display: block;
+    margin: 2% 5%;
+}
+
+.comment_box{
+    background-color: #343a40;
+    display: block;
+    margin: 2% 5%;
+}
+
+
+/*Custom style for the like and dislike bttons*/
+.like_dislike_btn{
+    background-color: floralwhite;
+    display: inline-block;
+    margin: auto;
+    border: 1px groove;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    color: #343a40;
+    text-align: center;
+}
+
+
+/*Some finagling requiered to make the buttons look good, this is a border and placement for the buttons*/
+.btn_box{
+    height: 0%;
+    width: 0%;
+    display: inline-block;
+    margin-left: 5%;
+    margin-bottom: 1%;
+    background-color: black;
+    cursor: hand;
+    line-height: 15px;
+}
+
+/*Box field for the user stamp on posts*/
+.User_box{
+    height: 0%;
+    width: 0%;
+    display: inline-block;
+    margin-left: 5%;
+    margin-bottom: 1%;
+    background-color: black;
+    cursor: hand;
+}
+
+/*Same as btn_box, but for the "sort by" buttons instead*/
+.sort_by_btn{
+    background-color: floralwhite;
+    display: inline-block;
+    margin: auto;
+    border: 2px groove;
+    width: 50px;
+    height: 50px;
+    border-radius: 20px;
+}
+
+/*The border and pacing of the different "sort by" buttons*/
+.sort_by{
+    height: 0%;
+    width: 0%;
+    display: inline-block;
+    margin-left: 5%;
+    margin-top: 1%;
+    cursor: hand;
+}
+
+.Upload_file_btn{
+    height: 0%;
+    width: 0%;
+    display: inline-block;
+    margin-left: 5%;
+    margin-top: 1%;
+    cursor: hand;
+}
+
+.body_box{
+    height: 0%;
+    width: 0%;
+    margin-right: 1000px;
+}

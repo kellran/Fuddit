@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+
+<a href="@Url.RouteUrl("Userview", new { nickname = "Kelran" })">User Profile</a>

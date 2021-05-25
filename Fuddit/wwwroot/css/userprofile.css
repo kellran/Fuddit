@@ -1,0 +1,30 @@
+﻿body {
+    background-color: white;
+    color: black;
+    
+}
+.btn-profile {
+    color: black;
+    background-color: #d8d8d8;
+    border-color: #1861ac;
+    height: 100px; width: 175px;
+    margin-bottom: 30px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 150%
+}
+.btn-profile2 {
+    color: gray;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    width: 75%;
+    margin-bottom: 60px;
+}
+.btn-profile3 {
+    color: #fff;
+    background-color: #d8d8d8;
+    border-color: #1861ac;
+    padding: 5px; width: 75%;
+    margin-bottom: 30px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 150%
+}
