@@ -108,13 +108,13 @@
             </div>
             <div class="btn_box">    
                 <div class="btn_box glyphicon center">
-                    @Html.ActionLink("", "Like", new {id = post.Id}, new {@class="like_dislike_btn glyphicon glyphicon-thumbs-up text-success"})
+                    @Html.ActionLink("", "Like", new {id = post.Id, redirect = "News"}, new {@class="like_dislike_btn glyphicon glyphicon-thumbs-up text-success"})
                     
                 </div>
             </div>
             <div class="btn_box">
             <div>
-                @Html.ActionLink("", "Dislike", new {id = post.Id}, new {@class = "like_dislike_btn glyphicon glyphicon-thumbs-down text-danger"})
+                @Html.ActionLink("", "Dislike", new {id = post.Id, redirect = "News"}, new {@class = "like_dislike_btn glyphicon glyphicon-thumbs-down text-danger"})
             </div>
             </div>
             
