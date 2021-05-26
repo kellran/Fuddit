@@ -149,14 +149,16 @@ namespace Fuddit.Controllers
         [Authorize]
         public IActionResult Like(int id)
         {
-            if (ModelState.IsValid && !_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
+            if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
+            if (!_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
             {
+                
                 var auth = new Votes
                 {
                     User = _um.GetUserAsync(User).Result, Post = _db.Posts.ToList().Find(u => u.Id == id), 
                     _like = 1
                 };
-            
+             
             
                 Post update = _db.Posts.ToList().Find(u => u.Id == id);
                 update.Like += 1;
@@ -165,10 +167,32 @@ namespace Fuddit.Controllers
                 
                 _db.Votes.Add(auth);
                 _db.SaveChanges();
+                return RedirectToAction(nameof(Index));
                 
             }
+            
+            // Remove like
+            if(_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like == 1))
+            {
+                var current = _db.Votes
+                    .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                
+                
+                var telling = current._dislike + current._like;
+                Post update = _db.Posts.ToList().Find(u => u.Id == id);
+                update.Like -= telling;
+                current._like = 0;
+
+                var delete = _db.Votes.Where(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                _db.Votes.RemoveRange(delete);
+                _db.SaveChanges();
+               
+                
+                Console.WriteLine("Removed like");
+            }
+            
             // Switching from dislike to like
-            if (ModelState.IsValid && _db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike ==1))
+            if (_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike == 1))
             {
                 var current = _db.Votes
                     .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
@@ -185,14 +209,15 @@ namespace Fuddit.Controllers
 
                 Console.WriteLine("Changed dislike to like");
             }
-                
+            
             return RedirectToAction(nameof(Index));
         }
         
         [Authorize]
         public IActionResult LikeNews(int id)
         {
-            if (ModelState.IsValid && !_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
+            if (!ModelState.IsValid) return RedirectToAction(nameof(News));
+            if (!_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
             {
                 var auth = new Votes
                 {
@@ -210,8 +235,27 @@ namespace Fuddit.Controllers
                 _db.SaveChanges();
                 
             }
+            // Remove like
+            if(_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like == 1))
+            {
+                var current = _db.Votes
+                    .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                
+                
+                var telling = current._dislike + current._like;
+                Post update = _db.Posts.ToList().Find(u => u.Id == id);
+                update.Like -= telling;
+                current._like = 0;
+
+                var delete = _db.Votes.Where(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                _db.Votes.RemoveRange(delete);
+                _db.SaveChanges();
+               
+                
+                Console.WriteLine("Removed like");
+            }
             // Switching from dislike to like
-            if (ModelState.IsValid && _db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike ==1))
+            if (_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike ==1))
             {
                 var current = _db.Votes
                     .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
@@ -228,14 +272,15 @@ namespace Fuddit.Controllers
 
                 Console.WriteLine("Changed dislike to like");
             }
-                
+
             return RedirectToAction(nameof(News));
         }
         
         [Authorize]
         public IActionResult LikeGaming(int id)
         {
-            if (ModelState.IsValid && !_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
+            if (!ModelState.IsValid) return RedirectToAction(nameof(Gaming));
+            if (!_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
             {
                 var auth = new Votes
                 {
@@ -253,8 +298,27 @@ namespace Fuddit.Controllers
                 _db.SaveChanges();
                 
             }
+            // Remove like
+            if(_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like == 1))
+            {
+                var current = _db.Votes
+                    .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                
+                
+                var telling = current._dislike + current._like;
+                Post update = _db.Posts.ToList().Find(u => u.Id == id);
+                update.Like -= telling;
+                current._like = 0;
+
+                var delete = _db.Votes.Where(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                _db.Votes.RemoveRange(delete);
+                _db.SaveChanges();
+               
+                
+                Console.WriteLine("Removed like");
+            }
             // Switching from dislike to like
-            if (ModelState.IsValid && _db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike ==1))
+            if (_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike ==1))
             {
                 var current = _db.Votes
                     .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
@@ -271,14 +335,15 @@ namespace Fuddit.Controllers
 
                 Console.WriteLine("Changed dislike to like");
             }
-                
+
             return RedirectToAction(nameof(Gaming));
         }
         
         [Authorize]
         public IActionResult LikeFunny(int id)
         {
-            if (ModelState.IsValid && !_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
+            if (!ModelState.IsValid) return RedirectToAction(nameof(Funny));
+            if (!_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
             {
                 var auth = new Votes
                 {
@@ -296,8 +361,27 @@ namespace Fuddit.Controllers
                 _db.SaveChanges();
                 
             }
+            // Remove like
+            if(_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like == 1))
+            {
+                var current = _db.Votes
+                    .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                
+                
+                var telling = current._dislike + current._like;
+                Post update = _db.Posts.ToList().Find(u => u.Id == id);
+                update.Like -= telling;
+                current._like = 0;
+
+                var delete = _db.Votes.Where(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                _db.Votes.RemoveRange(delete);
+                _db.SaveChanges();
+               
+                
+                Console.WriteLine("Removed like");
+            }
             // Switching from dislike to like
-            if (ModelState.IsValid && _db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike ==1))
+            if (_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike ==1))
             {
                 var current = _db.Votes
                     .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
@@ -314,19 +398,15 @@ namespace Fuddit.Controllers
 
                 Console.WriteLine("Changed dislike to like");
             }
-                
+
             return RedirectToAction(nameof(Funny));
         }
         
         [Authorize]
         public IActionResult Dislike(int id, Votes vote)
         {
-            if (id == null)
-            {
-                
-                
-            }
-            if (ModelState.IsValid && !_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
+            if (!ModelState.IsValid) return RedirectToAction(nameof(Index));
+            if (!_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
             {
                 
                 var auth = new Votes
@@ -339,14 +419,35 @@ namespace Fuddit.Controllers
                 Post update = _db.Posts.ToList().Find(u => u.Id == id);
                 
                 update.Like -= 1;
-                Console.WriteLine("Removed one like to post");
+                Console.WriteLine("Added one dislike to post");
                 
                 
                 _db.Votes.Add(auth);
                 _db.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            
+            if(_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike == 1))
+            {
+                // This lets us use the current post user. 
+                var current = _db.Votes
+                    .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                
+                
+                var telling = current._dislike + current._like;
+                Post update = _db.Posts.ToList().Find(u => u.Id == id);
+                update.Like += telling;
+                current._dislike = 0;
+                
+                var delete = _db.Votes.Where(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                _db.Votes.RemoveRange(delete);
+                _db.SaveChanges();
+                
+                
+                Console.WriteLine("Removed dislike"); 
             }
             // Switching from like to dislike
-            if (ModelState.IsValid && _db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like ==1))
+            if (_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like ==1))
             {
                 var current = _db.Votes
                     .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
@@ -364,13 +465,15 @@ namespace Fuddit.Controllers
 
                 Console.WriteLine("Changed like to dislike");
             }
+
             return RedirectToAction(nameof(Index));  
         }
         
         [Authorize]
         public IActionResult DislikeNews(int id, Votes vote)
         {
-            if (ModelState.IsValid && !_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
+            if (!ModelState.IsValid) return RedirectToAction(nameof(News));
+            if (!_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
             {
                 
                 var auth = new Votes
@@ -383,14 +486,33 @@ namespace Fuddit.Controllers
                 Post update = _db.Posts.ToList().Find(u => u.Id == id);
                 
                 update.Like -= 1;
-                Console.WriteLine("Removed one like to post");
+                Console.WriteLine("Added one dislike to post");
                 
                 
                 _db.Votes.Add(auth);
                 _db.SaveChanges();
             }
+            if(_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike == 1))
+            {
+                // This lets us use the current post user. 
+                var current = _db.Votes
+                    .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                
+                
+                var telling = current._dislike + current._like;
+                Post update = _db.Posts.ToList().Find(u => u.Id == id);
+                update.Like += telling;
+                current._dislike = 0;
+                
+                var delete = _db.Votes.Where(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                _db.Votes.RemoveRange(delete);
+                _db.SaveChanges();
+                
+                
+                Console.WriteLine("Removed dislike"); 
+            }
             // Switching from like to dislike
-            if (ModelState.IsValid && _db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like ==1))
+            if (_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like ==1))
             {
                 var current = _db.Votes
                     .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
@@ -414,7 +536,8 @@ namespace Fuddit.Controllers
         [Authorize]
         public IActionResult DislikeGaming(int id, Votes vote)
         {
-            if (ModelState.IsValid && !_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
+            if (!ModelState.IsValid) return RedirectToAction(nameof(Gaming));
+            if (!_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
             {
                 
                 var auth = new Votes
@@ -433,8 +556,27 @@ namespace Fuddit.Controllers
                 _db.Votes.Add(auth);
                 _db.SaveChanges();
             }
+            if(_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike == 1))
+            {
+                // This lets us use the current post user. 
+                var current = _db.Votes
+                    .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                
+                
+                var telling = current._dislike + current._like;
+                Post update = _db.Posts.ToList().Find(u => u.Id == id);
+                update.Like += telling;
+                current._dislike = 0;
+                
+                var delete = _db.Votes.Where(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                _db.Votes.RemoveRange(delete);
+                _db.SaveChanges();
+                
+                
+                Console.WriteLine("Removed dislike"); 
+            }
             // Switching from like to dislike
-            if (ModelState.IsValid && _db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like ==1))
+            if (_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like ==1))
             {
                 var current = _db.Votes
                     .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
@@ -459,7 +601,8 @@ namespace Fuddit.Controllers
         [Authorize]
         public IActionResult DislikeFunny(int id, Votes vote)
         {
-            if (ModelState.IsValid && !_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
+            if (!ModelState.IsValid) return RedirectToAction(nameof(Funny));
+            if (!_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id))
             {
                 
                 var auth = new Votes
@@ -478,8 +621,27 @@ namespace Fuddit.Controllers
                 _db.Votes.Add(auth);
                 _db.SaveChanges();
             }
+            if(_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._dislike == 1))
+            {
+                // This lets us use the current post user. 
+                var current = _db.Votes
+                    .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                
+                
+                var telling = current._dislike + current._like;
+                Post update = _db.Posts.ToList().Find(u => u.Id == id);
+                update.Like += telling;
+                current._dislike = 0;
+                
+                var delete = _db.Votes.Where(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
+                _db.Votes.RemoveRange(delete);
+                _db.SaveChanges();
+                
+                
+                Console.WriteLine("Removed dislike"); 
+            }
             // Switching from like to dislike
-            if (ModelState.IsValid && _db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like ==1))
+            if (_db.Votes.Any(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id && a._like ==1))
             {
                 var current = _db.Votes
                     .FirstOrDefault(a => a.User.Id == _um.GetUserAsync(User).Result.Id && a.Post.Id == id);
